@@ -1,6 +1,6 @@
 import * as GeoJSON from 'geojson';
 
-type ValueType = string | number;
+type ValueType = string | number | boolean;
 type PropertyType = {[field: string]: ValueType};
 
 interface ValueWithBoost<T> {
