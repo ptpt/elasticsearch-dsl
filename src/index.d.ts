@@ -61,7 +61,7 @@ interface WildChar<T=PropertyType> {
 
 interface Regexp<T=PropertyType> {
     regexp: {
-        [field in keyof T]?: string | {
+        [field in keyof T]?: T[field] | {
             value: T[field];
             boost?: number;
             flags?: string;
