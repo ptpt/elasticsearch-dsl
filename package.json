@@ -1,0 +1,20 @@
+{
+  "name": "@types/elasticsearch-dsl",
+  "version": "1.0.0",
+  "description": "Types for Elasticsearch Query DSL",
+  "main": "index.js",
+  "dependencies": {
+    "@types/geojson": "^7946.0.1"
+  },
+  "devDependencies": {
+    "@types/elasticsearch": "^5.0.19",
+    "@types/jasmine": "^2.8.6",
+    "elasticsearch": "^14.1.0",
+    "jasmine": "^2.9.0"
+  },
+  "scripts": {
+    "test": "jasmine dist/tests.js"
+  },
+  "author": "Tao Peng",
+  "license": "MIT"
+}
