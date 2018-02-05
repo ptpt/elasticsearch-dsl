@@ -1,5 +1,5 @@
 {
-  "name": "@types/elasticsearch-dsl",
+  "name": "elasticsearch-dsl",
   "version": "1.0.0",
   "description": "Types for Elasticsearch Query DSL",
   "main": "index.js",
@@ -11,6 +11,10 @@
     "@types/jasmine": "^2.8.6",
     "elasticsearch": "^14.1.0",
     "jasmine": "^2.9.0"
+  },
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/ptpt/elasticsearch-dsl.git"
   },
   "scripts": {
     "test": "jasmine dist/tests.js"
