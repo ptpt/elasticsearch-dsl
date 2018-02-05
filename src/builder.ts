@@ -161,21 +161,25 @@ export class Query extends Object {
         return prependAndReplaceObject<DSL.Query, DSL.Nested>(thisIsQuery, wrap) as this & DSL.Nested;
     }
 
-    static addShould(query: QueryOrArray): Query & DSL.Bool {
-        return (new Query()).addShould(query);
-    }
-
-    public addShould(query: QueryOrArray): this & DSL.Bool {
+    private addBool(query: QueryOrArray, branch: 'should' | 'must' | 'filter' | 'must_not'): this & DSL.Bool {
         if (!Array.isArray(query)) {
             query = [query];
         }
         const root = this.findQueryRoot();
         clearObject(root, ['bool']);
-        const should = setDefault(root, ['bool', 'should'], []);
+        const should = setDefault(root, ['bool', branch], []);
         for (const q of query) {
             should.push({...q});
         }
         return this as this & DSL.Bool;
+    }
+
+    static addShould(query: QueryOrArray): Query & DSL.Bool {
+        return (new Query()).addShould(query);
+    }
+
+    public addShould(query: QueryOrArray): this & DSL.Bool {
+        return this.addBool(query, 'should');
     }
 
     static addMust(query: QueryOrArray): Query & DSL.Bool {
@@ -183,16 +187,7 @@ export class Query extends Object {
     }
 
     public addMust(query: QueryOrArray): this & DSL.Bool {
-        if (!Array.isArray(query)) {
-            query = [query];
-        }
-        const root = this.findQueryRoot();
-        clearObject(root, ['bool']);
-        const must = setDefault(root, ['bool', 'must'], []);
-        for (const q of query) {
-            must.push({...q});
-        }
-        return this as this & DSL.Bool;
+        return this.addBool(query, 'must');
     }
 
     static addMustNot(query: QueryOrArray): Query & DSL.Bool {
@@ -200,16 +195,7 @@ export class Query extends Object {
     }
 
     public addMustNot(query: QueryOrArray): this & DSL.Bool {
-        if (!Array.isArray(query)) {
-            query = [query];
-        }
-        const root = this.findQueryRoot();
-        clearObject(root, ['bool']);
-        const mustNot = setDefault(root, ['bool', 'must_not'], []);
-        for (const q of query) {
-            mustNot.push({...q});
-        }
-        return this as this & DSL.Bool;
+        return this.addBool(query, 'must_not');
     }
 
     static addFilter(query: QueryOrArray): Query & DSL.Bool {
@@ -217,15 +203,6 @@ export class Query extends Object {
     }
 
     public addFilter(query: QueryOrArray): this & DSL.Bool {
-        if (!Array.isArray(query)) {
-            query = [query];
-        }
-        const root = this.findQueryRoot();
-        clearObject(root, ['bool']);
-        const filter = setDefault(root, ['bool', 'filter'], []);
-        for (const q of query) {
-            filter.push({...q});
-        }
-        return this as this & DSL.Bool;
+        return this.addBool(query, 'filter');
     }
 }
