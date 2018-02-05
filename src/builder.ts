@@ -167,9 +167,9 @@ export class Query extends Object {
         }
         const root = this.findQueryRoot();
         clearObject(root, ['bool']);
-        const should = setDefault(root, ['bool', branch], []);
+        const array = setDefault(root, ['bool', branch], []);
         for (const q of query) {
-            should.push({...q});
+            array.push({...q});
         }
         return this as this & DSL.Bool;
     }
