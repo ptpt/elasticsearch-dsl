@@ -18,14 +18,9 @@ const setDefault = <T>(obj, path: any[], defaultValue?: T): T => {
 
     const lastKey = path[lastIdx];
     if (parent[lastKey] === undefined) {
-        if (defaultValue !== undefined) {
-            parent[lastKey] = defaultValue;
-        }
-    } else {
-        return parent[lastKey];
+        parent[lastKey] = defaultValue;
     }
-
-    return defaultValue;
+    return parent[lastKey];
 };
 
 const getDefault = <T>(obj, path: any[], defaultValue?: T): T => {
@@ -39,11 +34,7 @@ const getDefault = <T>(obj, path: any[], defaultValue?: T): T => {
         parent = parent[key];
     }
 
-    if (parent === undefined) {
-        return defaultValue;
-    }
-
-    return parent;
+    return parent === undefined ? defaultValue : parent;
 }
 
 const clearObject = <T>(obj: T, keep?: string[]): T => {
