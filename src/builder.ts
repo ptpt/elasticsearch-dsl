@@ -49,7 +49,7 @@ const clearObject = <T>(obj: T, keep?: string[]): T => {
     return obj;
 }
 
-const discardFalsy = <T>(obj: T): T => {
+const discardFalsy = <T extends Object>(obj: T): T => {
     const keep = Object.keys(obj).filter((key) => obj[key] !== undefined);
     const newObj = {...(obj as Object)} as T;
     return clearObject(newObj, keep);
@@ -152,7 +152,7 @@ export class Query extends Object {
         return prependAndReplaceObject<DSL.Query, DSL.Nested>(thisIsQuery, wrap) as this & DSL.Nested;
     }
 
-    private addBool(query: QueryOrArray, branch: 'should' | 'must' | 'filter' | 'must_not'): this & DSL.Bool {
+    private addBool(query: QueryOrArray, branch: keyof DSL.Bool['bool']): this & DSL.Query {
         if (!Array.isArray(query)) {
             query = [query];
         }
@@ -162,38 +162,38 @@ export class Query extends Object {
         for (const q of query) {
             array.push({...q});
         }
-        return this as this & DSL.Bool;
+        return this as this & DSL.Query;
     }
 
-    static addShould(query: QueryOrArray): Query & DSL.Bool {
+    static addShould(query: QueryOrArray): Query & DSL.Query {
         return (new Query()).addShould(query);
     }
 
-    public addShould(query: QueryOrArray): this & DSL.Bool {
+    public addShould(query: QueryOrArray): this & DSL.Query {
         return this.addBool(query, 'should');
     }
 
-    static addMust(query: QueryOrArray): Query & DSL.Bool {
+    static addMust(query: QueryOrArray): Query & DSL.Query {
         return (new Query()).addMust(query);
     }
 
-    public addMust(query: QueryOrArray): this & DSL.Bool {
+    public addMust(query: QueryOrArray): this & DSL.Query {
         return this.addBool(query, 'must');
     }
 
-    static addMustNot(query: QueryOrArray): Query & DSL.Bool {
+    static addMustNot(query: QueryOrArray): Query & DSL.Query {
         return (new Query()).addMustNot(query);
     }
 
-    public addMustNot(query: QueryOrArray): this & DSL.Bool {
+    public addMustNot(query: QueryOrArray): this & DSL.Query {
         return this.addBool(query, 'must_not');
     }
 
-    static addFilter(query: QueryOrArray): Query & DSL.Bool {
+    static addFilter(query: QueryOrArray): Query & DSL.Query {
         return (new Query()).addFilter(query);
     }
 
-    public addFilter(query: QueryOrArray): this & DSL.Bool {
+    public addFilter(query: QueryOrArray): this & DSL.Query {
         return this.addBool(query, 'filter');
     }
 }

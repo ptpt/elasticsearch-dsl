@@ -218,20 +218,20 @@ describe('test', () => {
             world: number;
         }
 
-        const t: DSL.Term<Properties> = {
+        const q0: DSL.Term<Properties> = {
             'term': {
                 'hello': 'world',
             }
         };
 
-        const qq: DSL.Query<Properties> = {
+        const q1: DSL.Query<Properties> = {
             bool: {
-                must: t,
-                must_not: [t],
+                must: q0,
+                must_not: [q0, {'term': {'hello': 'world'}}],
             },
         }
 
-        const qqqq: DSL.GeoShapeInline<keyof Properties> = {
+        const q2: DSL.GeoShape<keyof Properties> = {
             'geo_shape': {
                 'hello': {
                     'shape': { 'type': 'Point' },
@@ -240,26 +240,18 @@ describe('test', () => {
             }
         };
 
-        const qqq: DSL.Bool = {
-            bool: {
-                must: {
+        const q3: DSL.Bool = {
+            'bool': {
+                'must': {
                     'term': {
                         'hello': 'hello',
-                        'world2': 'hello'
                     },
                 },
-                should: {
-                    'geo_shape': {
-                        'hello': {
-                            'shape': { 'type': 'Point', 'coordinates': [1, 2] },
-                            'relation': 'within'
-                        },
-                    }
-                },
+                'should': [q2, q2],
                 'must_not': [
                     { 'terms': { 'world': [1, 2, 3] } },
                 ]
             },
-        }
+        };
     })
 });
