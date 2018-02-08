@@ -1,7 +1,109 @@
 import { Query } from './builder';
 import * as DSL from './index';
 
-describe('test', () => {
+// type for tests
+interface Properties {
+    hello: string;
+    world: number;
+}
+
+describe('test types', () => {
+    it('match_all', () => {
+        const q0: DSL.MatchAll = {
+            'match_all': {}
+        };
+        const q1: DSL.MatchAll = {
+            'match_all': {
+                'boost': 1
+            }
+        };
+    });
+
+    it('match_none', () => {
+        const q0: DSL.MatchNone = {
+            'match_none': {}
+        };
+    });
+
+    it('term', () => {
+        const q1: DSL.Term = {
+            'term': {
+                'world': 'world',
+            }
+        };
+
+        const q0: DSL.Term<Properties> = {
+            'term': {
+                'hello': 'world',
+            }
+        };
+    });
+
+    it('terms', () => {
+        const q0: DSL.Terms = {
+            'terms': {
+                world: [1,2,3],
+            }
+        };
+        const q1: DSL.Terms<Properties> = {
+            'terms': {
+                world: [1,2,3]
+            }
+        };
+    });
+
+    it('range', () => {
+        const q0: DSL.Range = {
+            'range': {
+                'hello': {
+                    gte: 1,
+                    lte: 2,
+                    boost: 12,
+                }
+            }
+        };
+    });
+
+    it('bool', () => {
+        const q0: DSL.Terms = {
+            'terms': {
+                world: [1,2,3],
+            }
+        };
+
+        const q1: DSL.Query<Properties> = {
+            bool: {
+                must: q0,
+                must_not: [q0, {'term': {'hello': 'world'}}],
+            },
+        }
+
+        const q2: DSL.GeoShape<keyof Properties> = {
+            'geo_shape': {
+                'hello': {
+                    'shape': { 'type': 'Point' },
+                    'relation': 'within'
+                },
+            }
+        };
+
+        const q3: DSL.Bool = {
+            'bool': {
+                'must': {
+                    'term': {
+                        'hello': 'hello',
+                    },
+                },
+                'should': [q2, q2],
+                'must_not': [
+                    { 'terms': { 'world': [1, 2, 3] } },
+                ]
+            },
+        };
+    })
+});
+
+describe('test query builder', () => {
     it('should make match_all', () => {
         expect(Query.matchAll()).toEqual({
             'match_all': {}
@@ -211,47 +313,4 @@ describe('test', () => {
 
         // console.log(JSON.stringify(query, null, 2));
     });
-
-    it('should have correct types', () => {
-        interface Properties {
-            hello: string;
-            world: number;
-        }
-
-        const q0: DSL.Term<Properties> = {
-            'term': {
-                'hello': 'world',
-            }
-        };
-
-        const q1: DSL.Query<Properties> = {
-            bool: {
-                must: q0,
-                must_not: [q0, {'term': {'hello': 'world'}}],
-            },
-        }
-
-        const q2: DSL.GeoShape<keyof Properties> = {
-            'geo_shape': {
-                'hello': {
-                    'shape': { 'type': 'Point' },
-                    'relation': 'within'
-                },
-            }
-        };
-
-        const q3: DSL.Bool = {
-            'bool': {
-                'must': {
-                    'term': {
-                        'hello': 'hello',
-                    },
-                },
-                'should': [q2, q2],
-                'must_not': [
-                    { 'terms': { 'world': [1, 2, 3] } },
-                ]
-            },
-        };
-    })
 });
