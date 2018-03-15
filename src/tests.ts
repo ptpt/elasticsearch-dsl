@@ -64,6 +64,135 @@ describe('test types', () => {
         };
     });
 
+    it('geo_distance', () => {
+        const q0: DSL.GeoDistance = {
+            'geo_distance': {
+                'pin.location': {
+                    'lon': 1,
+                    'lat': 2,
+                },
+                'distance': '12km',
+                'distance_type': 'arc',
+            }
+        };
+
+        const q1: DSL.GeoDistance = {
+            'geo_distance': {
+                'pin.location': [-70, 40],
+                'distance': '12km',
+                'distance_type': 'plane',
+            }
+        };
+
+        const q2: DSL.GeoDistance = {
+            'geo_distance': {
+                'pin.location': "40,-70",
+                'distance': '12km',
+            }
+        };
+
+        const q3: DSL.GeoDistance = {
+            'geo_distance': {
+                'pin.location': "drm3btev3e86",
+                'distance': '12km',
+            }
+        };
+    });
+
+    it('geo_bounding_box', () => {
+        const q0: DSL.GeoBoundingBox = {
+            "geo_bounding_box" : {
+                "pin.location" : {
+                    "top_left" : {
+                        "lat" : 40.73,
+                        "lon" : -74.1
+                    },
+                    "bottom_right" : {
+                        "lat" : 40.01,
+                        "lon" : -71.12
+                    }
+                }
+            }
+        };
+
+        const q1: DSL.GeoBoundingBox = {
+            "geo_bounding_box" : {
+                "pin.location" : {
+                    "top_left" : {
+                        "lat" : 40.73,
+                        "lon" : -74.1
+                    },
+                    "bottom_right" : {
+                        "lat" : 40.01,
+                        "lon" : -71.12
+                    }
+                }
+            }
+        };
+
+        const q3: DSL.GeoBoundingBox = {
+            "geo_bounding_box" : {
+                "pin.location" : {
+                    "top_left" : [-74.1, 40.73],
+                    "bottom_right" : [-71.12, 40.01]
+                }
+            }
+        };
+
+        const q4: DSL.GeoBoundingBox = {
+            "geo_bounding_box" : {
+                "pin.location" : {
+                    "top_left" : "40.73, -74.1",
+                    "bottom_right" : "40.01, -71.12"
+                }
+            }
+        };
+
+        const q5: DSL.GeoBoundingBox = {
+            "geo_bounding_box" : {
+                "pin.location" : {
+                    "wkt" : "BBOX (-74.1, -71.12, 40.73, 40.01)"
+                }
+            }
+        };
+
+        const q6: DSL.GeoBoundingBox = {
+            "geo_bounding_box" : {
+                "pin.location" : {
+                    "top_left" : "dr5r9ydj2y73",
+                    "bottom_right" : "drj7teegpus6"
+                }
+            }
+        };
+
+        const q7: DSL.GeoBoundingBox = {
+            "geo_bounding_box" : {
+                "pin.location" : {
+                    "top" : 40.73,
+                    "left" : -74.1,
+                    "bottom" : 40.01,
+                    "right" : -71.12
+                }
+            }
+        };
+
+        const q8: DSL.GeoBoundingBox = {
+            "geo_bounding_box" : {
+                "pin.location" : {
+                    "top_left" : {
+                        "lat" : 40.73,
+                        "lon" : -74.1
+                    },
+                    "bottom_right" : {
+                        "lat" : 40.10,
+                        "lon" : -71.12
+                    }
+                },
+                "type" : "indexed",
+            }
+        };
+    });
+
     it('bool', () => {
         const q0: DSL.Terms = {
             'terms': {

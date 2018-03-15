@@ -156,12 +156,20 @@ interface BBoxVertices {
     right: number;
 }
 
-type BBox = BBoxLonLat | BBoxArray | BBoxString | BBoxVertices;
+interface BBoxWKT {
+    wkt: string;
+}
+
+type BBox = BBoxLonLat | BBoxArray | BBoxString | BBoxVertices | BBoxWKT;
+
+interface GeoBoundingBoxOptions {
+    type?: 'indexed' | 'memory';
+}
 
 interface GeoBoundingBox<F extends string=string> {
     geo_bounding_box: {
-        [field in F]?: BBox;
-    }
+        [field in F]: BBox | GeoBoundingBoxOptions[keyof GeoBoundingBoxOptions];
+    } & GeoBoundingBoxOptions;
 }
 
 interface GeoDistanceOptions {
@@ -171,7 +179,7 @@ interface GeoDistanceOptions {
 
 interface GeoDistance<F extends string=string> {
     geo_distance: {
-        [field in F]?: LonLat | [number, number];
+        [field in F]: LonLat | [number, number] | string | GeoDistanceOptions[keyof GeoDistanceOptions];
     } & GeoDistanceOptions;
 }
 

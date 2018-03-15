@@ -67,5 +67,5 @@ $ tsc -w
 
 Run tests:
 ```
-$ jasmine dist/tests.js
+$ npm run test
 ```
