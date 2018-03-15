@@ -17,7 +17,7 @@
     "url" : "https://github.com/ptpt/elasticsearch-dsl.git"
   },
   "scripts": {
-    "test": "jasmine dist/tests.js"
+    "test": "tsc && jasmine dist/tests.js"
   },
   "author": "Tao Peng",
   "license": "MIT"
