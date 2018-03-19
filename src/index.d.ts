@@ -109,7 +109,7 @@ type Relation = 'INTERSECTS'
 interface GeoShapeInline<T extends string=string> {
     geo_shape: {
         [field in T]?: {
-            shape: GeoJSON.GeometryObject;
+            shape: GeoJSON.GeometryObject | {type: 'envelope'};
             relation?: Relation;
         }
     }
