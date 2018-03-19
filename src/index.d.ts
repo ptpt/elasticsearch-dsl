@@ -35,7 +35,9 @@ interface Range<T=PropertyType> {
     range: {
         [field in keyof T]?: {
             gte?: T[field];
+            gt?: T[field];
             lte?: T[field];
+            lt?: T[field];
             boost?: number;
         }
     }
