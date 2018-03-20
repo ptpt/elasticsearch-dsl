@@ -55,8 +55,8 @@ interface Prefix<T=PropertyType> {
     }
 }
 
-interface WildChar<T=PropertyType> {
-    wildchar: {
+interface WildCard<T=PropertyType> {
+    wildcard: {
         [field in keyof T]?: SingleValueOrBoost<T[field]>;
     }
 }
@@ -191,7 +191,7 @@ export type SimpleQuery<T=PropertyType> = Regexp<T>
     | Range<T>
     | Exists
     | Prefix<T>
-    | WildChar<T>
+    | WildCard<T>
     | Regexp<T>
     | Fuzzy<T>
     | Type
