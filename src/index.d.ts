@@ -206,6 +206,8 @@ interface Bool<T=PropertyType> {
         must?: Query<T> | Query<T>[];
         must_not?: Query<T> | Query<T>[];
         should?: Query<T> | Query<T>[];
+        minimum_should_match?: number | string;
+        boost?: number;
     }
 }
 
