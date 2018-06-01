@@ -196,9 +196,9 @@ export type SimpleQuery<T=PropertyType> = Regexp<T>
     | Fuzzy<T>
     | Type
     | Ids
-    | GeoShape<keyof T>
-    | GeoDistance<keyof T>
-    | GeoBoundingBox<keyof T>;
+    | GeoShape<string>         // FIXME: should be keyof T
+    | GeoDistance<string>     // FIXME: should be keyof T
+    | GeoBoundingBox<string>;  // FIXME: should be keyof T
 
 interface Bool<T=PropertyType> {
     bool: {
