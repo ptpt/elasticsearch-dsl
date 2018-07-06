@@ -223,6 +223,11 @@ interface Nested<T=PropertyType> {
         path: string;
         query: Query<T>;
         score_mode?: 'sum' | 'min' | 'max' | 'none';
+        inner_hits?: {
+            // FIXME
+            _source?: any;
+            docvalue_fields?: any;
+        };
     }
 }
 
