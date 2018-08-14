@@ -106,10 +106,15 @@ type Relation = 'INTERSECTS'
     | 'within'
     | 'contains';
 
+interface GeoShapeEnvelope {
+    type: 'envelope' | 'Envelope',
+    coordinates: [[number, number], [number, number]],
+}
+
 interface GeoShapeInline<T extends string=string> {
     geo_shape: {
         [field in T]?: {
-            shape: GeoJSON.GeometryObject | {type: 'envelope'};
+            shape: GeoJSON.GeometryObject | GeoShapeEnvelope;
             relation?: Relation;
         }
     }
