@@ -229,7 +229,11 @@ interface Nested<T=PropertyType> {
         query: Query<T>;
         score_mode?: 'sum' | 'min' | 'max' | 'none';
         inner_hits?: {
+            from?: number;
+            size?: number;
+            name?: string;
             // FIXME
+            sort?: any;
             _source?: any;
             docvalue_fields?: any;
         };
