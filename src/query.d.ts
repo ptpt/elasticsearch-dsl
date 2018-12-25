@@ -134,7 +134,7 @@ interface GeoShapeIndexed<F extends string=string> {
     }
 }
 
-type GeoShape<F extends string> = GeoShapeInline<F> | GeoShapeIndexed<F>;
+type GeoShape<F extends string=string> = GeoShapeInline<F> | GeoShapeIndexed<F>;
 
 interface LonLat {
     lon: number;
@@ -201,9 +201,9 @@ export type SimpleQuery<T=PropertyType> = Regexp<T>
     | Fuzzy<T>
     | Type
     | Ids
-    | GeoShape<string>         // FIXME: should be keyof T
-    | GeoDistance<string>     // FIXME: should be keyof T
-    | GeoBoundingBox<string>;  // FIXME: should be keyof T
+    | GeoShape<Extract<keyof T, string>>
+    | GeoDistance<Extract<keyof T, string>>
+    | GeoBoundingBox<Extract<keyof T, string>>;
 
 interface Bool<T=PropertyType> {
     bool: {
