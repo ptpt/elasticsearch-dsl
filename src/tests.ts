@@ -6,65 +6,42 @@ interface Properties {
     world: number;
 }
 
+export function extendable<A, B>(_true: A extends B ? true : false) {};
+
 describe('test types', () => {
     it('match_all', () => {
-        const q0: DSL.MatchAll = {
-            'match_all': {}
-        };
-        const q1: DSL.MatchAll = {
-            'match_all': {
-                'boost': 1
-            }
-        };
+        extendable<{'match_all': {}}, DSL.MatchAll>(true);
+        extendable<{'match_all': {}}, DSL.MatchAll>(true);
+        extendable<{'match_all': {'boost': 1}}, DSL.MatchAll>(true);
+        extendable<{'match_all': {'boost': 'hello'}}, DSL.MatchAll>(false);
+        extendable<{'match_all': {'hello': 1}}, DSL.MatchAll>(false);
     });
 
     it('match_none', () => {
-        const q0: DSL.MatchNone = {
-            'match_none': {}
-        };
+        extendable<{'match_none': {}}, DSL.MatchNone>(true);
+        // FIXME: why!
+        // extendable<{'match_none': {'hello': 1}}, DSL.MatchNone>(false);
     });
 
     it('term', () => {
-        const q1: DSL.Term = {
-            'term': {
-                'world': 'world',
-            }
-        };
-
-        const q0: DSL.Term<Properties> = {
-            'term': {
-                'hello': 'world',
-            }
-        };
+        extendable<{'term': {'world': 'world'}}, DSL.Term>(true);
+        extendable<{'term': {'hello': 'world'}}, DSL.Term<Properties>>(true);
+        extendable<{'term': {'hello': 1}}, DSL.Term<Properties>>(false);
+        extendable<{'term': {'haha': 'world'}}, DSL.Term<Properties>>(false);
     });
 
     it('terms', () => {
-        const q0: DSL.Terms = {
-            'terms': {
-                world: [1,2,3],
-            }
-        };
-        const q1: DSL.Terms<Properties> = {
-            'terms': {
-                world: [1,2,3]
-            }
-        };
+        extendable<{'terms': {'world': [1,2,3]}}, DSL.Terms>(true);
+        extendable<{'terms': {'world': ['hello']}}, DSL.Terms<Properties>>(false);
     });
 
     it('range', () => {
-        const q0: DSL.Range = {
-            'range': {
-                'hello': {
-                    gte: 1,
-                    lte: 2,
-                    boost: 12,
-                }
-            }
-        };
+        extendable<{'range': {'hello': {'gte': 1, 'lte': 2, 'boost': 12}}}, DSL.Range>(true);
+        extendable<{'range': {'world': {'gte': 1, 'lte': 2, 'boost': 12}}}, DSL.Range<Properties>>(true);
     });
 
     it('geo_distance', () => {
-        const q0: DSL.GeoDistance = {
+        extendable<{
             'geo_distance': {
                 'pin.location': {
                     'lon': 1,
@@ -73,33 +50,41 @@ describe('test types', () => {
                 'distance': '12km',
                 'distance_type': 'arc',
             }
-        };
+        }, DSL.GeoDistance>(true);
 
-        const q1: DSL.GeoDistance = {
+        extendable<{
             'geo_distance': {
                 'pin.location': [-70, 40],
                 'distance': '12km',
                 'distance_type': 'plane',
             }
-        };
+        }, DSL.GeoDistance>(true);
 
-        const q2: DSL.GeoDistance = {
+        extendable<{
             'geo_distance': {
                 'pin.location': "40,-70",
                 'distance': '12km',
             }
-        };
+        }, DSL.GeoDistance>(true);
 
-        const q3: DSL.GeoDistance = {
+        extendable<{
             'geo_distance': {
                 'pin.location': "drm3btev3e86",
                 'distance': '12km',
             }
-        };
+        }, DSL.GeoDistance>(true);
+
+        // FIXME: here
+        // extendable<{
+        //     'geo_distance': {
+        //         'pin.location': "drm3btev3e86",
+        //         'distance': '12km',
+        //     }
+        // }, DSL.GeoDistance<keyof Properties>>(false);
     });
 
     it('geo_bounding_box', () => {
-        const q0: DSL.GeoBoundingBox = {
+        extendable<{
             "geo_bounding_box" : {
                 "pin.location" : {
                     "top_left" : {
@@ -112,9 +97,9 @@ describe('test types', () => {
                     }
                 }
             }
-        };
+        }, DSL.GeoBoundingBox>(true);
 
-        const q1: DSL.GeoBoundingBox = {
+        extendable<{
             "geo_bounding_box" : {
                 "pin.location" : {
                     "top_left" : {
@@ -127,44 +112,44 @@ describe('test types', () => {
                     }
                 }
             }
-        };
+        }, DSL.GeoBoundingBox>(true);
 
-        const q3: DSL.GeoBoundingBox = {
+        extendable<{
             "geo_bounding_box" : {
                 "pin.location" : {
                     "top_left" : [-74.1, 40.73],
                     "bottom_right" : [-71.12, 40.01]
                 }
             }
-        };
+        }, DSL.GeoBoundingBox>(true);
 
-        const q4: DSL.GeoBoundingBox = {
+        extendable<{
             "geo_bounding_box" : {
                 "pin.location" : {
                     "top_left" : "40.73, -74.1",
                     "bottom_right" : "40.01, -71.12"
                 }
             }
-        };
+        }, DSL.GeoBoundingBox>(true);
 
-        const q5: DSL.GeoBoundingBox = {
+        extendable<{
             "geo_bounding_box" : {
                 "pin.location" : {
                     "wkt" : "BBOX (-74.1, -71.12, 40.73, 40.01)"
                 }
             }
-        };
+        }, DSL.GeoBoundingBox>(true);
 
-        const q6: DSL.GeoBoundingBox = {
+        extendable<{
             "geo_bounding_box" : {
                 "pin.location" : {
                     "top_left" : "dr5r9ydj2y73",
                     "bottom_right" : "drj7teegpus6"
                 }
             }
-        };
+        }, DSL.GeoBoundingBox>(true);
 
-        const q7: DSL.GeoBoundingBox = {
+        extendable<{
             "geo_bounding_box" : {
                 "pin.location" : {
                     "top" : 40.73,
@@ -173,9 +158,9 @@ describe('test types', () => {
                     "right" : -71.12
                 }
             }
-        };
+        }, DSL.GeoBoundingBox>(true);
 
-        const q8: DSL.GeoBoundingBox = {
+        extendable<{
             "geo_bounding_box" : {
                 "pin.location" : {
                     "top_left" : {
@@ -189,7 +174,7 @@ describe('test types', () => {
                 },
                 "type" : "indexed",
             }
-        };
+        }, DSL.GeoBoundingBox>(true);
     });
 
     it('bool', () => {
@@ -222,7 +207,8 @@ describe('test types', () => {
                         'hello': 'hello',
                     },
                 },
-                'should': [q2, q2],
+                'filter': q0,
+                'should': [q0, q1, q2],
                 'must_not': [
                     { 'terms': { 'world': [1, 2, 3] } },
                 ]

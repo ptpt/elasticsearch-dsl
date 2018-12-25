@@ -11,8 +11,9 @@ interface ValueWithBoost<T> {
 type SingleValueOrBoost<T> = T | ValueWithBoost<T>;
 
 interface MatchAll {
-    match_all: {}
-    boost?: number;
+    match_all: {
+        boost?: number;
+    }
 }
 
 interface MatchNone {
@@ -175,8 +176,8 @@ interface GeoBoundingBoxOptions {
 
 interface GeoBoundingBox<F extends string=string> {
     geo_bounding_box: {
-        [field in F]: BBox | GeoBoundingBoxOptions[keyof GeoBoundingBoxOptions];
-    } & GeoBoundingBoxOptions;
+        [field in F]: BBox;
+    } | GeoBoundingBoxOptions;
 }
 
 interface GeoDistanceOptions {
@@ -186,8 +187,8 @@ interface GeoDistanceOptions {
 
 interface GeoDistance<F extends string=string> {
     geo_distance: {
-        [field in F]: LonLat | [number, number] | string | GeoDistanceOptions[keyof GeoDistanceOptions];
-    } & GeoDistanceOptions;
+        [field in F]: LonLat | [number, number] | string;
+    } | GeoDistanceOptions;
 }
 
 export type SimpleQuery<T=PropertyType> = Regexp<T>
