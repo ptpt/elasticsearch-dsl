@@ -1,4 +1,4 @@
-import * as DSL from './index';
+import * as DSL from './query';
 
 const isObject = (obj): boolean => {
     return obj && typeof obj === 'object'

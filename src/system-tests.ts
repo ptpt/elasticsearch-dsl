@@ -2,7 +2,7 @@ import * as els from 'elasticsearch';
 import * as GeoJSON from 'geojson';
 
 import { Query } from './builder';
-import * as DSL from './index';
+import * as DSL from './query';
 
 describe('test', () => {
     it('should work with elasticsearch', (done) => {

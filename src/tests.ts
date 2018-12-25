@@ -1,5 +1,5 @@
 import { Query } from './builder';
-import * as DSL from './index';
+import * as DSL from './query';
 
 // type for tests
 interface Properties {
