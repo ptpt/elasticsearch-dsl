@@ -194,7 +194,7 @@ describe('test types', () => {
     });
 
     it('bool', () => {
-        const q0: DSL.Terms = {
+        const q0: DSL.Terms<Properties> = {
             'terms': {
                 world: [1,2,3],
             }
@@ -216,7 +216,7 @@ describe('test types', () => {
             }
         };
 
-        const q3: DSL.Bool = {
+        const q3: DSL.Bool<Properties> = {
             'bool': {
                 'must': {
                     'term': {
