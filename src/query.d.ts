@@ -43,9 +43,9 @@ interface Range<T=PropertyType> {
     }
 }
 
-interface Exists {
+interface Exists<F=string> {
     exists: {
-        field: string;
+        field: F;
     };
 }
 
@@ -194,7 +194,7 @@ export type SimpleQuery<T=PropertyType> = Regexp<T>
     | Term<T>
     | Terms<T>
     | Range<T>
-    | Exists
+    | Exists<keyof T>
     | Prefix<T>
     | WildCard<T>
     | Regexp<T>
