@@ -205,7 +205,7 @@ export type SimpleQuery<T=PropertyType> = Regexp<T>
     | GeoDistance<Extract<keyof T, string>>
     | GeoBoundingBox<Extract<keyof T, string>>;
 
-interface Bool<T=PropertyType> {
+export interface Bool<T=PropertyType> {
     bool: {
         filter?: Query<T> | Query<T>[];
         must?: Query<T> | Query<T>[];
@@ -216,14 +216,14 @@ interface Bool<T=PropertyType> {
     }
 }
 
-interface ConstantScore<T=PropertyType> {
+export interface ConstantScore<T=PropertyType> {
     constant_score: {
         filter: Query<T>;
         boost?: number;
     }
 }
 
-interface Nested<T=PropertyType> {
+export interface Nested<T=PropertyType> {
     nested: {
         path: string;
         query: Query<T>;
