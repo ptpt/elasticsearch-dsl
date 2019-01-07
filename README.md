@@ -2,6 +2,14 @@
 Write type-safe Elasticsearch queries for TypeScript
 
 
+## Installation
+```
+yarn add elasticsearch-dsl --dev
+# or
+npm install elasticsearch-dsl --save-dev
+```
+
+
 ## Examples
 
 Secure queries with `DSL.Query`:
