@@ -10,11 +10,12 @@
     "@types/elasticsearch": "^5.0.19",
     "@types/jasmine": "^2.8.6",
     "elasticsearch": "^14.1.0",
-    "jasmine": "^2.9.0"
+    "jasmine": "^2.9.0",
+    "typescript": "^3.2.2"
   },
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/ptpt/elasticsearch-dsl.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ptpt/elasticsearch-dsl.git"
   },
   "scripts": {
     "test": "tsc && jasmine dist/tests.js"
