@@ -56,16 +56,15 @@ const q3: DSL.Bool = {
 
 Set up:
 ```
-$ npm install typescript
-$ npm install
+yarn install
 ```
 
 Build and watch:
 ```
-$ tsc -w
+tsc -w
 ```
 
 Run tests:
 ```
-$ npm run test
+yarn test
 ```
