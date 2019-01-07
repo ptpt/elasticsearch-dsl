@@ -1,5 +1,5 @@
 {
-  "name": "elasticsearch-dsl",
+  "name": "elasticsearch-dsl-types",
   "version": "1.0.0",
   "description": "Types for Elasticsearch Query DSL",
   "main": "index.js",

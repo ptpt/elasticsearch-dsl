@@ -4,9 +4,9 @@ Write type-safe Elasticsearch queries for TypeScript
 
 ## Installation
 ```
-yarn add elasticsearch-dsl --dev
+yarn add elasticsearch-dsl-types --dev
 # or
-npm install elasticsearch-dsl --save-dev
+npm install elasticsearch-dsl-types --save-dev
 ```
 
 
