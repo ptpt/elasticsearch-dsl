@@ -7,8 +7,8 @@
     "@types/geojson": "^7946.0.1"
   },
   "devDependencies": {
-    "@types/jasmine": "^2.8.6",
-    "jasmine": "^2.9.0",
+    "@types/jasmine": "^3.3.16",
+    "jasmine": "^3.4.0",
     "typescript": "^3.5.3"
   },
   "repository": {
