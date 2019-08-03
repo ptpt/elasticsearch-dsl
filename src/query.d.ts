@@ -170,25 +170,21 @@ interface BBoxWKT {
 
 type BBox = BBoxLonLat | BBoxArray | BBoxString | BBoxVertices | BBoxWKT;
 
-interface GeoBoundingBoxOptions {
-    type?: 'indexed' | 'memory';
-}
-
 interface GeoBoundingBox<F extends string=string> {
     geo_bounding_box: {
         [field in F]: BBox;
-    } | GeoBoundingBoxOptions;
-}
-
-interface GeoDistanceOptions {
-    distance: string | number;
-    distance_type?: 'arc' | 'plane';
+    } & {
+        type?: 'indexed' | 'memory';
+    };
 }
 
 interface GeoDistance<F extends string=string> {
     geo_distance: {
         [field in F]: LonLat | [number, number] | string;
-    } | GeoDistanceOptions;
+    } & {
+        distance: string | number;
+        distance_type?: 'arc' | 'plane';
+    };
 }
 
 export type SimpleQuery<T=PropertyType> = Regexp<T>
