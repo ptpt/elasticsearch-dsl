@@ -40,6 +40,33 @@ describe('test types', () => {
         extendable<{'range': {'world': {'gte': 1, 'lte': 2, 'boost': 12}}}, DSL.Range<Properties>>(true);
     });
 
+    it('match', () => {
+        extendable<{'match': {'message': 'hello'}}, DSL.Match>(true);
+        extendable<{'match': {'message': {'query': 'hello'}}}, DSL.Match>(true);
+        extendable<{
+            "match": {
+                "message": "this is a test",
+            },
+        }, DSL.Match>(true);
+        extendable<{
+            "match": {
+                "message": {
+                    "query": "this is a test",
+                    "operator": "and",
+                },
+            },
+        }, DSL.Match>(true);
+        extendable<{
+            "match": {
+                "message": {
+                    "query": "to be or not to be",
+                    "operator": "and",
+                    "zero_terms_query": "all",
+                },
+            },
+        }, DSL.Match>(true);
+    });
+
     it('geo_distance', () => {
         extendable<{
             'geo_distance': {
@@ -73,14 +100,6 @@ describe('test types', () => {
                 'distance': '12km',
             },
         }, DSL.GeoDistance>(true);
-
-        // FIXME: here
-        // extendable<{
-        //     'geo_distance': {
-        //         'pin.location': "drm3btev3e86",
-        //         'distance': '12km',
-        //     }
-        // }, DSL.GeoDistance<keyof Properties>>(false);
     });
 
     it('geo_bounding_box', () => {

@@ -1,7 +1,12 @@
 import * as GeoJSON from 'geojson';
 
 type ValueType = string | number | boolean;
-type PropertyType = {[field: string]: ValueType};
+
+interface PropertyType {
+    [field: string]: ValueType;
+}
+
+type SingleOrArray<T> = T | T[];
 
 interface ValueWithBoost<T> {
     value: T;
@@ -171,20 +176,34 @@ interface BBoxWKT {
 type BBox = BBoxLonLat | BBoxArray | BBoxString | BBoxVertices | BBoxWKT;
 
 interface GeoBoundingBox<F extends string=string> {
+    // can not use & here
     geo_bounding_box: {
         [field in F]: BBox;
-    } & {
+    } | {
         type?: 'indexed' | 'memory';
     };
 }
 
 interface GeoDistance<F extends string=string> {
+    // can not use & here
     geo_distance: {
         [field in F]: LonLat | [number, number] | string;
-    } & {
+    } | {
         distance: string | number;
         distance_type?: 'arc' | 'plane';
     };
+}
+
+interface Match<T=PropertyType> {
+    match: {
+        [field in keyof T]: string | {
+            query: string;
+            operator?: string;
+            zero_terms_query?: string;
+            cutoff_frequency?: number;
+            auto_generate_synonyms_phrase_query?: boolean;
+        };
+    }
 }
 
 export type SimpleQuery<T=PropertyType> = Regexp<T>
@@ -200,14 +219,15 @@ export type SimpleQuery<T=PropertyType> = Regexp<T>
     | Ids
     | GeoShape<Extract<keyof T, string>>
     | GeoDistance<Extract<keyof T, string>>
-    | GeoBoundingBox<Extract<keyof T, string>>;
+    | GeoBoundingBox<Extract<keyof T, string>>
+    | Match<T>;
 
 export interface Bool<T=PropertyType> {
     bool: {
-        filter?: Query<T> | Query<T>[];
-        must?: Query<T> | Query<T>[];
-        must_not?: Query<T> | Query<T>[];
-        should?: Query<T> | Query<T>[];
+        filter?: SingleOrArray<Query<T>>;
+        must?: SingleOrArray<Query<T>>;
+        must_not?: SingleOrArray<Query<T>>;
+        should?: SingleOrArray<Query<T>>;
         minimum_should_match?: number | string;
         boost?: number;
     }
