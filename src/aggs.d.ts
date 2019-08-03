@@ -18,8 +18,19 @@ type MetricAgg = Avg | Sum;
 
 interface DateHistogram {
     date_histogram: {
+        // 7.x
         field: string;
         calendar_interval: string;
+        fixed_interval?: string;
+        format?: string;
+        time_zone?: string;
+        offset?: string;
+        keyed?: boolean;
+        missing?: string;
+    } | {
+        // 6.x
+        field: string;
+        interval: string;
         fixed_interval?: string;
         format?: string;
         time_zone?: string;
