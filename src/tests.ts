@@ -67,6 +67,14 @@ describe('test types', () => {
         }, DSL.Match>(true);
     });
 
+    it('query_string', () => {
+        extendable<{
+            "query_string": {
+                "query": 'hello',
+            },
+        }, DSL.QueryString>(true);
+    });
+
     it('geo_distance', () => {
         extendable<{
             'geo_distance': {

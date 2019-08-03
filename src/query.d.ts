@@ -206,6 +206,14 @@ interface Match<T=PropertyType> {
     }
 }
 
+interface QueryString<F=string> {
+    query_string: {
+        query: string;
+        default_field?: F;
+        // FIXME: more params
+    }
+}
+
 export type SimpleQuery<T=PropertyType> = Regexp<T>
     | Term<T>
     | Terms<T>
@@ -220,7 +228,8 @@ export type SimpleQuery<T=PropertyType> = Regexp<T>
     | GeoShape<Extract<keyof T, string>>
     | GeoDistance<Extract<keyof T, string>>
     | GeoBoundingBox<Extract<keyof T, string>>
-    | Match<T>;
+    | Match<T>
+    | QueryString<keyof T>;
 
 export interface Bool<T=PropertyType> {
     bool: {
