@@ -15,7 +15,7 @@ npm install elasticsearch-dsl-types --save-dev
 Secure queries with `DSL.Query`:
 
 ```typescript
-import * as DSL from 'elasticsearch-dsl';
+import * as DSL from 'elasticsearch-dsl-types';
 
 interface Properties {
     hello: string;
