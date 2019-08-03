@@ -194,7 +194,7 @@ describe('test types', () => {
         const q2: DSL.GeoShape<keyof Properties> = {
             'geo_shape': {
                 'hello': {
-                    'shape': { 'type': 'Point' },
+                    'shape': { 'type': 'Point', 'coordinates': [1, 2] },
                     'relation': 'within'
                 },
             }
