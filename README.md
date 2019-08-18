@@ -4,8 +4,6 @@ Write type-safe Elasticsearch queries for TypeScript
 
 ## Installation
 ```
-yarn add elasticsearch-dsl-types --dev
-# or
 npm install elasticsearch-dsl-types --save-dev
 ```
 
@@ -15,7 +13,7 @@ npm install elasticsearch-dsl-types --save-dev
 Secure queries with `DSL.Query`:
 
 ```typescript
-import {DSL} from 'elasticsearch-dsl-types';
+import { DSL } from 'elasticsearch-dsl-types';
 
 interface Properties {
     hello: string;
@@ -57,22 +55,21 @@ const q3: DSL.Bool = {
         ]
     },
 };
-
 ```
 
 ## Development
 
 Set up:
 ```
-yarn install
+npm install
 ```
 
 Build and watch:
 ```
-tsc -w
+npx tsc --watch
 ```
 
 Run tests:
 ```
-yarn test
+npm test
 ```
