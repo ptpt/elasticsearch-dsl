@@ -14,7 +14,34 @@ interface Sum {
     };
 }
 
-type MetricAgg = Avg | Sum;
+interface Min {
+    min: {
+        field: string;
+        missing?: number;
+    }
+}
+
+interface Max {
+    max: {
+        field: string;
+        missing?: number;
+    }
+}
+
+interface TopHits {
+    top_hits: {
+        // How the top matching hits should be sorted. By default the hits are sorted by the score of the main query
+        sort?: any[];
+        // The maximum number of top matching hits to return per bucket. By default the top three matching hits are returned
+        size?: number;
+        // The offset from the first result you want to fetch
+        from?: number;
+        // FIXME
+        _source?: any;
+    }
+}
+
+type MetricAgg = Avg | Sum | Min | Max | TopHits;
 
 interface DateHistogram {
     date_histogram: {
