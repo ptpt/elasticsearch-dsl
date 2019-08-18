@@ -1,6 +1,6 @@
 {
   "name": "elasticsearch-dsl-types",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Types for Elasticsearch Query DSL",
   "main": "index.js",
   "dependencies": {

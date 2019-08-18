@@ -120,7 +120,29 @@ interface Nested {
     }
 }
 
-type BucketAgg = DateHistogram | DateRange | Filter | Filters | Terms | Nested;
+interface GeohashGrid {
+    geohash_grid: {
+        field: string;
+        // The string length of the geohashes used to define cells/buckets in the results. Defaults to 5
+        // Values outside of [1,12] will be rejected.
+        // Alternatively, the precision level can be approximated from a distance measure like "1km", "10m".
+        precision?: number | string;
+        // The maximum number of geohash buckets to return
+        size?: number;
+        // To allow for more accurate counting of the top cells returned in the final result the aggregation
+        shard_size?: number;
+    }
+}
+
+interface Sampler {
+    sampler: {
+        // The shard_size parameter limits how many top-scoring documents are collected in the sample processed on each shard.
+        // The default value is 100.
+        shard_size?: number;
+    }
+}
+
+type BucketAgg = DateHistogram | DateRange | Filter | Filters | Terms | Nested | GeohashGrid | Sampler;
 
 type Agg = (MetricAgg | BucketAgg) & {aggs?: NamedAgg};
 
