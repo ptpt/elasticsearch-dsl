@@ -120,6 +120,12 @@ interface Nested {
     }
 }
 
+interface ReverseNested {
+    reverse_nested: {
+        path?: string;
+    }
+}
+
 interface GeohashGrid {
     geohash_grid: {
         field: string;
@@ -142,7 +148,7 @@ interface Sampler {
     }
 }
 
-type BucketAgg = DateHistogram | DateRange | Filter | Filters | Terms | Nested | GeohashGrid | Sampler;
+type BucketAgg = DateHistogram | DateRange | Filter | Filters | Terms | Nested | ReverseNested | GeohashGrid | Sampler;
 
 type Agg = (MetricAgg | BucketAgg) & {aggs?: NamedAgg};
 
